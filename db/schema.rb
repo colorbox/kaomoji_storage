@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_084731) do
 
   create_table "tweets", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.string "tweet_identifier", default: "f", null: false
     t.string "text", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

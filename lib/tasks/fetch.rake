@@ -2,15 +2,15 @@ require 'twitter_client'
 
 namespace :fetch do
   USER_FETCH_LIMIT = 14
-  USER_COUNT = 200
-  TIMELINE_TWEETS_COUNT = 4
-  TIMELINE_FETCH_LIMIT = 2
+  USER_FETCH_COUNT = 200
+  TIMELINE_TWEETS_FETCH_COUNT = 200
+  TIMELINE_TWEETS_FETCH_LIMIT = 15
 
   desc 'fetch users from my followees'
   task users: :environment do
     client = TwitterClient.client
 
-    params = {count: USER_COUNT}
+    params = {count: USER_FETCH_COUNT}
 
     followees = client.friends(params)
     users = followees.attrs[:users]
@@ -38,15 +38,21 @@ namespace :fetch do
     end
   end
 
-  desc 'fetch tweet from users in storage' do
+
+  desc 'fetch tweet from users in storage'
+  task tweets: :environment do
+    User.not_fetch.each do |user|
+      fetch_user_timeline(user)
+    end
+
   end
 
   def fetch_user_timeline(user)
     client = TwitterClient.client
 
-    fetch_latest_params = {count: TIMELINE_TWEETS_COUNT, user_id: user.twitter_identifier}
+    fetch_latest_params = {count: TIMELINE_TWEETS_FETCH_COUNT, user_id: user.twitter_identifier}
     tweets = client.user_timeline(fetch_latest_params)
-    TIMELINE_FETCH_LIMIT.times do
+    TIMELINE_TWEETS_FETCH_LIMIT.times do
       fetch_latest_params = fetch_latest_params.merge(max_id: tweets.last.id.to_s)
       tweets.concat(client.user_timeline(fetch_latest_params))
     end

@@ -16,7 +16,15 @@ namespace :fetch do
     users = followees.attrs[:users]
     USER_FETCH_LIMIT.times do
       params = params.merge(cursor: followees.attrs[:next_cursor])
-      followees = client.friends(params)
+      begin
+        followees = client.friends(params)
+      rescue Twitter::Error::TooManyRequests => error
+        pp error.message
+        pp error.backtrace
+        pp 'sleep 15 minutes'
+        sleep(60*15)
+        retry
+      end
       users.concat(followees.attrs[:users])
     end
 

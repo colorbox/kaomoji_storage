@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2019_02_16_084731) do
     t.string "text", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["tweet_identifier"], name: "index_tweets_on_tweet_identifier", unique: true
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end
 
@@ -25,8 +26,10 @@ ActiveRecord::Schema.define(version: 2019_02_16_084731) do
     t.string "twitter_identifier", null: false
     t.string "screen_name", null: false
     t.string "name", null: false
+    t.string "desription", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["twitter_identifier"], name: "index_users_on_twitter_identifier", unique: true
   end
 
 end

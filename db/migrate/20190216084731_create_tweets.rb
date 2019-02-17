@@ -6,6 +6,8 @@ class CreateTweets < ActiveRecord::Migration[5.2]
       t.string :text, null:false, default: ''
 
       t.timestamps
+
+      t.index :tweet_identifier, unique: true
     end
   end
 end

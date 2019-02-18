@@ -50,6 +50,7 @@ namespace :fetch do
 
     fetch_latest_params = {count: TIMELINE_TWEETS_FETCH_COUNT, user_id: user.twitter_identifier}
     tweets = client.user_timeline(fetch_latest_params)
+    return if tweets.blank?
     TIMELINE_TWEETS_FETCH_LIMIT.times do
       fetch_latest_params = fetch_latest_params.merge(max_id: tweets.last.id.to_s)
       tweets.concat(client.user_timeline(fetch_latest_params))

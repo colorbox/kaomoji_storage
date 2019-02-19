@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class TweetTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'fetch_kaomoji' do
+
+    assert_equal tweets(:one).kaomojis, ['(-3-)', '(・3・)']
+  end
 end

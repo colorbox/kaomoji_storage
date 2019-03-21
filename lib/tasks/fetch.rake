@@ -6,6 +6,46 @@ namespace :fetch do
   TIMELINE_TWEETS_FETCH_COUNT = 200
   TIMELINE_TWEETS_FETCH_LIMIT = 15
 
+  desc 'fetch specific user with screen_name'
+  task :user_with_screen_name, [:screen_name] => :environment do |_, argv|
+    abort 'there is no user' if argv&.screen_name.blank?
+
+    client = TwitterClient.client
+    user = client.user(argv.screen_name)
+
+    abort "There is already #{argv.screen_name}" if User.where(twitter_identifier: user.id.to_s).present?
+
+    User.create(
+      twitter_identifier: user.id.to_s,
+      screen_name: user.screen_name,
+      name: user.name
+    )
+
+  rescue Twitter::Error::NotFound => error
+    abort "there is no user:#{argv.screen_name}"
+  end
+
+  desc 'fetch followers from specific user'
+  task :followers_from_screen_name, [:screen_name] => :environment do |_, argv|
+    abort 'there is no user' if argv&.screen_name.blank?
+
+    client = TwitterClient.friendly_client
+
+    followers = client.followers(argv.screen_name)
+
+    followers.each do |follower|
+      pp "#{follower.screen_name}|#{follower.name}"
+      next if User.where(twitter_identifier: follower.id.to_s).present?
+      User.create(
+        twitter_identifier: follower.id.to_s,
+        screen_name: follower.screen_name,
+        name: follower.name
+      )
+    end
+  rescue Twitter::Error::NotFound => error
+    abort "there is no user:#{argv.screen_name}"
+  end
+
   desc 'fetch users from my followees'
   task users: :environment do
     client = TwitterClient.client

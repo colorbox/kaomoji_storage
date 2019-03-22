@@ -81,9 +81,8 @@ namespace :fetch do
   task tweets: :environment do
     User.not_fetch.each do |user|
       fetch_user_timeline(user)
-      pp "#{Time.now.strftime('%Y/%m/%d %H:%M:%S')} #{Tweet.count.to_s(:delimited)}"
+      pp "#{Time.now.strftime('%Y/%m/%d %H:%M:%S')} #{Tweet.count.to_s(:delimited)} | fetched: @#{user.screen_name}(#{user.name})"
     end
-
   end
 
   def fetch_user_timeline(user)

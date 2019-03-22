@@ -105,10 +105,13 @@ namespace :fetch do
       )
     end
   rescue Twitter::Error::TooManyRequests => error
-    pp error.message
+    pp error.inspect
     pp error.backtrace
     pp 'sleep 15 minutes'
     sleep(60*15)
     retry
+  rescue Twitter::Error::Unauthorized => error
+    pp error.inspect
+    pp error.backtrace
   end
 end

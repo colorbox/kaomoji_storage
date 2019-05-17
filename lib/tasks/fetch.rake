@@ -110,7 +110,8 @@ namespace :fetch do
     sleep(60*15)
     retry
   rescue Twitter::Error::Unauthorized => error
+    user.destroy!
+    pp "destroy or watch :#{user.screen_name}|#{user.name}"
     pp error.inspect
-    pp error.backtrace
   end
 end

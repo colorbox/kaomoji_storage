@@ -81,10 +81,11 @@ namespace :fetch do
   task tweets: :environment do
     User.not_fetch.each do |user|
       fetch_user_timeline(user)
-      pp "#{Time.now.strftime('%Y/%m/%d %H:%M:%S')} #{Tweet.count.to_s(:delimited)} | fetched: @#{user.screen_name}(#{user.name})" if user.persisted?
       if user.tweets.count.zero?
         pp "destroy with no tweets user :#{user.screen_name}|#{user.name}"
         user.destroy!
+      else
+        pp "#{Time.now.strftime('%Y/%m/%d %H:%M:%S')} #{Tweet.count.to_s(:delimited)} | fetched: @#{user.screen_name}(#{user.name})" if user.persisted?
       end
     end
   end

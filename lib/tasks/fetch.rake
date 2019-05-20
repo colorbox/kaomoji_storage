@@ -79,7 +79,7 @@ namespace :fetch do
 
   desc 'fetch tweet from users in storage'
   task tweets: :environment do
-    User.not_fetch.each do |user|
+    Parallel.each(User.not_fetch) do |user|
       fetch_user_timeline(user)
       if user.tweets.count.zero?
         pp "destroy with no tweets user :#{user.screen_name}|#{user.name}"

@@ -110,9 +110,9 @@ namespace :fetch do
     end
   rescue Twitter::Error::TooManyRequests => error
     pp error.inspect
-    pp error.backtrace
-    pp 'sleep 15 minutes'
-    sleep(60*15)
+    seconds = error.rate_limit.reset_in.to_i # or client.rate_limit.follower_ids[:reset_in]
+    pp "sleep #{seconds} seconds"
+    sleep seconds
     retry
   rescue Twitter::Error::Unauthorized => error
     user.destroy!

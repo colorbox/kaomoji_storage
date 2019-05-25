@@ -39,11 +39,14 @@ namespace :fetch do
       User.create(
         twitter_identifier: follower.id.to_s,
         screen_name: follower.screen_name,
-        name: follower.name
+        name: follower.name.nil? ? '' : follower.name
       )
     end
   rescue Twitter::Error::NotFound => error
     abort "there is no user:#{argv.screen_name}"
+  rescue ActiveRecord::NotNullViolation => e
+    pp e.inspect
+    pp e.message
   end
 
   desc 'fetch users from my followees'

@@ -2,7 +2,7 @@ class Tweet < ApplicationRecord
   belongs_to :user
   has_many :kaomojis, dependent: :destroy
 
-  scope :not_filtered, -> { includes(:kaomojis).where(kaomojis: {id:nil}) }
+  scope :not_bracket_filtered, -> { where(bracket_filtered_at: nil) }
 
   def create_raw_kaomojis
     duped = text.dup

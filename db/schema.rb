@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_13_140711) do
+ActiveRecord::Schema.define(version: 2019_05_23_072716) do
 
   create_table "kaomojis", force: :cascade do |t|
     t.integer "tweet_id", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_05_13_140711) do
     t.string "text", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "bracket_filtered_at"
     t.index ["tweet_identifier"], name: "index_tweets_on_tweet_identifier", unique: true
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end

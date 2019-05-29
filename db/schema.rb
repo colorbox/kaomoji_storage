@@ -10,23 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_23_072716) do
+ActiveRecord::Schema.define(version: 2019_05_29_131647) do
 
-  create_table "kaomojis", force: :cascade do |t|
-    t.integer "tweet_id", null: false
-    t.string "kaomoji", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tweet_id"], name: "index_kaomojis_on_tweet_id"
-  end
+# Could not dump table "kaomojis" because of following StandardError
+#   Unknown type 'booelan' for column 'has_bracket'
 
   create_table "tweets", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "tweet_identifier", default: "", null: false
+    t.string "tweet_identifier", default: "f", null: false
     t.string "text", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "bracket_filtered_at"
+    t.datetime "unicode_filtered_at"
     t.index ["tweet_identifier"], name: "index_tweets_on_tweet_identifier", unique: true
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end

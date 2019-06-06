@@ -3,6 +3,10 @@ class Tweet < ApplicationRecord
   has_many :kaomojis, dependent: :destroy
 
   scope :not_bracket_filtered, -> { where(bracket_filtered_at: nil) }
+  scope :bracket_filtered, -> { where.not(bracket_filtered_at: nil) }
+
+  scope :not_unicode_filtered, -> { where(unicode_filtered_at: nil) }
+  scope :unicode_filtered, -> { where.not(unicode_filtered_at: nil) }
 
   def create_raw_kaomojis
     duped = text.dup

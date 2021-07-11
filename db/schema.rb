@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_29_134803) do
+ActiveRecord::Schema.define(version: 2021_07_11_075057) do
 
 # Could not dump table "kaomojis" because of following StandardError
-#   Unknown type 'booelan' for column 'has_bracket'
+#   Unknown type '' for column 'has_bracket'
 
   create_table "selected_kaomojis", force: :cascade do |t|
     t.string "kaomoji", null: false

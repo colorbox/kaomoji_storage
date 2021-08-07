@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_11_075057) do
+ActiveRecord::Schema.define(version: 2021_07_24_041233) do
 
 # Could not dump table "kaomojis" because of following StandardError
 #   Unknown type '' for column 'has_bracket'
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2021_07_11_075057) do
     t.datetime "updated_at", null: false
     t.datetime "bracket_filtered_at"
     t.datetime "unicode_filtered_at"
+    t.datetime "html_special_character_converted_at"
     t.index ["tweet_identifier"], name: "index_tweets_on_tweet_identifier", unique: true
     t.index ["user_id"], name: "index_tweets_on_user_id"
   end

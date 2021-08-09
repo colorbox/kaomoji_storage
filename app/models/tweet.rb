@@ -8,6 +8,8 @@ class Tweet < ApplicationRecord
   scope :not_unicode_filtered, -> { where(unicode_filtered_at: nil) }
   scope :unicode_filtered, -> { where.not(unicode_filtered_at: nil) }
 
+  scope :not_html_special_characters_converted, -> { where(html_special_character_converted_at: nil) }
+
   def create_raw_kaomojis
     duped = text.dup
     kaomoji_regexp = /[（(].+?[)）]/
@@ -129,6 +131,19 @@ class Tweet < ApplicationRecord
     end
 
     kaomojis
+  end
+
+  HTML_SPECIAL_CHARACTERS_CONVERT = {
+    '&lt;' => '<',
+    '&gt;' => '>',
+    '&amp;' => '&'
+  }.freeze
+
+  def convert_html_special_characters
+    HTML_SPECIAL_CHARACTERS_CONVERT.each do |from, to|
+      self.text = text.gsub(from, to)
+    end
+    self.save
   end
 
   def valid_kaomoji?(kaomoji)

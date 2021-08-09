@@ -34,4 +34,35 @@ namespace :filter do
       kaomoji.save!
     end
   end
+
+  desc 'convert html special characters'
+  task convert_html_special_characters: :environment do
+    Tweet.where("text like ? or text like ? or text like ?", "%&gt;%", "%&amp;%", "%&lt;%").includes(:kaomojis).limit(100_000).find_in_batches(batch_size: 1_000) do |tweets|
+      tweets.each do |tweet|
+        tweet.kaomojis.each do |kaomoji|
+          kaomoji.destroy!
+        end
+
+        Tweet.transaction do
+          tweet.convert_html_special_characters
+          tweet.create_unicode_kaomojis
+          tweet.update(unicode_filtered_at: DateTime.now, html_special_character_converted_at: DateTime.now)
+        end
+      end
+      p '.'
+    end
+  end
 end
+
+
+# Kaomoji.find_in_batches(batch_size: 100_000) do |kaomojis|
+#   batch_kaomojis = []
+#   Parallel.each(kaomojis, in_processes: 2) do |kaomoji|
+#     kaomoji.has_bracket = true if brackets.chars.map{|b|kaomoji.kaomoji.include?(b)}.any?
+#     kaomoji.has_line_break = true if kaomoji.kaomoji.count("\n") > 0
+#     batch_kaomojis.push(kaomoji)
+#   end
+#
+#
+#   batch_kaomojis.each {|kaomoji| kaomoji.save! }
+# end

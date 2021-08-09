@@ -117,9 +117,18 @@ namespace :fetch do
     pp "sleep #{seconds} seconds"
     sleep seconds
     retry
-  rescue Twitter::Error::Unauthorized => error
+  rescue Twitter::Error::Unauthorized, Twitter::Error::NotFound => error
     user.destroy!
     pp "destroy or watch :#{user.screen_name}|#{user.name}"
     pp error.inspect
+  rescue Parallel::UndumpableException => e
+    pp "something undumpable"
+    pp e.message
+    pp e.backtrace
+    raise e
+  rescue => e
+    pp e.message
+    pp e.backtrace
+    raise e
   end
 end

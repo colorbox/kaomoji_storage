@@ -1,0 +1,13 @@
+<%= paginate @kaomojis %>
+
+<table>
+  <tbody>
+    <% @kaomojis.each do |kaomoji| %>
+      <tr>
+        <td><%= kaomoji.kaomoji.gsub("\n", "<br>").html_safe %></td>
+        <td><%= kaomoji.id %></td>
+        <td>x</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

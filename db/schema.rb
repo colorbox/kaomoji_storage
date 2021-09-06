@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_04_160740) do
+ActiveRecord::Schema.define(version: 2021_09_06_214010) do
 
   create_table "kaomojis", force: :cascade do |t|
     t.integer "tweet_id", null: false
@@ -22,11 +22,6 @@ ActiveRecord::Schema.define(version: 2021_09_04_160740) do
     t.boolean "has_bracket"
     t.index ["kaomoji"], name: "index_kaomojis_on_kaomoji"
     t.index ["tweet_id"], name: "index_kaomojis_on_tweet_id"
-  end
-
-  create_table "selected_kaomojis", force: :cascade do |t|
-    t.string "kaomoji", null: false
-    t.index [nil], name: "index_selected_kaomojis_on_twitter_identifier", unique: true
   end
 
   create_table "tweets", force: :cascade do |t|

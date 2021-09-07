@@ -1,0 +1,2 @@
+module KaomojiSelectHelper
+end

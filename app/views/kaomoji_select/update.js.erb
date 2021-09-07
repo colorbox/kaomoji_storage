@@ -1,0 +1,5 @@
+<% if @kaomoji.selected %>
+  $('#<%= @kaomoji.id %>').addClass('selected')
+<% else %>
+  $('#<%= @kaomoji.id %>').removeClass('selected')
+<% end %>

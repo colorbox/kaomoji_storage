@@ -2,9 +2,10 @@
 
 <table>
   <tbody>
-    <% @kaomojis.each do |kaomoji| %>
+    <% @kaomojis.each_slice(40) do |kaomojis| %>
       <tr>
-        <td><%= kaomoji.kaomoji.gsub("\n", "<br>").html_safe %></td>
-        <td><%= kaomoji.id %></td>
-        <td>x</td>
+        <% kaomojis.each do |kaomoji| %>
+          <td class='<%= kaomoji.selected ? 'selected' : '' %>'' id='<%= kaomoji.id %>'>
+            <%= link_to kaomoji.kaomoji.gsub("\n", "<br>").html_safe, kaomoji_select_path(kaomoji.id), method: :put, remote: true, format: :js %>
+        <% end %>
     <% end %>

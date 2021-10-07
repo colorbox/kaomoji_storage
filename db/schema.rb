@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_06_214942) do
+ActiveRecord::Schema.define(version: 2021_10_07_155229) do
 
   create_table "kaomojis", force: :cascade do |t|
     t.integer "tweet_id", null: false
@@ -21,8 +21,10 @@ ActiveRecord::Schema.define(version: 2021_09_06_214942) do
     t.boolean "has_line_break"
     t.boolean "has_bracket"
     t.boolean "selected"
+    t.datetime "unique_filtered_at"
     t.index ["kaomoji"], name: "index_kaomojis_on_kaomoji"
     t.index ["tweet_id"], name: "index_kaomojis_on_tweet_id"
+    t.index ["unique_filtered_at"], name: "index_kaomojis_on_unique_filtered_at"
   end
 
   create_table "tweets", force: :cascade do |t|
@@ -36,6 +38,13 @@ ActiveRecord::Schema.define(version: 2021_09_06_214942) do
     t.datetime "html_special_character_converted_at"
     t.index ["tweet_identifier"], name: "index_tweets_on_tweet_identifier", unique: true
     t.index ["user_id"], name: "index_tweets_on_user_id"
+  end
+
+  create_table "unique_kaomojis", force: :cascade do |t|
+    t.text "kaomoji", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kaomoji"], name: "index_unique_kaomojis_on_kaomoji", unique: true
   end
 
   create_table "users", force: :cascade do |t|

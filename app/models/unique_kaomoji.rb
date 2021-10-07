@@ -1,0 +1,2 @@
+class UniqueKaomoji < ApplicationRecord
+end

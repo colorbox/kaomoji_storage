@@ -52,6 +52,23 @@ namespace :filter do
       p '.'
     end
   end
+
+  desc 'filter unique kaomoji'
+  task uniquen_kaomojis: :environment do
+    Kaomoji.not_unique_filtered.limit(1_000_000).find_in_batches(batch_size: 1_000) do |kaomojis|
+      Parallel.each(kaomojis) do |kaomoji|
+        if UniqueKaomoji.where(kaomoji: kaomoji.kaomoji).count == 0
+          UniqueKaomoji.create(kaomoji: kaomoji.kaomoji)
+        end
+
+      rescue ActiveRecord::RecordNotUnique => e
+        # pp e.inspect
+      end
+
+      Kaomoji.where(id:kaomojis.map(&:id)).update_all(unique_filtered_at: Time.current)
+      p '.'
+    end
+  end
 end
 
 

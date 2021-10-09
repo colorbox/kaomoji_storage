@@ -11,7 +11,7 @@ class KaomojiSelectController < ApplicationController
   private
 
   def set_kaomoji
-    @kaomoji ||= Kaomoji.find(kaomoji_params[:kaomoji_id])
+    @kaomoji ||= UniqueKaomoji.find(kaomoji_params[:kaomoji_id])
   end
 
   def kaomoji_params

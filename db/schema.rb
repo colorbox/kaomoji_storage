@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_155229) do
+ActiveRecord::Schema.define(version: 2021_10_09_025101) do
 
   create_table "kaomojis", force: :cascade do |t|
     t.integer "tweet_id", null: false
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_155229) do
     t.text "kaomoji", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "selected", default: false
     t.index ["kaomoji"], name: "index_unique_kaomojis_on_kaomoji", unique: true
   end
 

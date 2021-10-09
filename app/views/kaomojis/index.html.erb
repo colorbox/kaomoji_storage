@@ -2,7 +2,7 @@
 
 <table>
   <tbody>
-    <% @kaomojis.each_slice(40) do |kaomojis| %>
+    <% @kaomojis.each_slice(20) do |kaomojis| %>
       <tr>
         <% kaomojis.each do |kaomoji| %>
           <td class='<%= kaomoji.selected ? 'selected' : '' %>'' id='<%= kaomoji.id %>'>

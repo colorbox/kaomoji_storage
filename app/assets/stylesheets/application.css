@@ -14,8 +14,8 @@
  *= require_self
  */
 
-.selected{
-  background-color: red;
+.selected {
+  background-color: #EEEEEE;
 }
 
 a {

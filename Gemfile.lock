@@ -231,7 +231,7 @@ GEM
       oj (~> 3.7)
       parallel (~> 1.12)
       twitter (~> 6.2)
-    tzinfo (1.2.9)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
